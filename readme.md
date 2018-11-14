@@ -1,5 +1,9 @@
 #Monitor
 
+Tutorial
+    https://blog.alexellis.io/prometheus-monitoring/
+    https://github.com/alexellis/hash-browns
+
 Start prometheus server
     $ docker-compose up
 
