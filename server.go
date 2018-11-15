@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"time"
@@ -17,14 +18,16 @@ func main() {
 	histogram := prometheus.NewHistogramVec(prometheus.HistogramOpts{
 		Name: "hash_seconds",
 		Help: "Time taken to create hashes",
-	}, []string{"code"}
+	}, []string{"code"})
 
 	r := mux.NewRouter()
 
 	r.Handle("/metrics", prometheusHandler())
 	r.Handle("/hash", hashHandler(histogram))
 
-	log.Fatal(http.ListenAndServe(":8002", r))
+	prometheus.Register(histogram)
+
+	log.Fatal(http.ListenAndServe(":8080", r))
 }
 
 func prometheusHandler() http.Handler {
@@ -42,7 +45,21 @@ func hashHandler(histogram *prometheus.HistogramVec) http.HandlerFunc {
 			histogram.WithLabelValues(fmt.Sprintf("%d", code)).Observe(duration.Seconds())
 		}()
 
-		//code = http.StatusOK
+		code = http.StatusMethodNotAllowed
+		if r.Method != http.MethodPost {
+			w.WriteHeader(code)
+
+			return
+		}
+
+		code = http.StatusOK
+		w.WriteHeader(code)
+		body, _ := ioutil.ReadAll(r.Body)
+
+		fmt.Printf("\"%s\"\n", string(body))
+
+		hashed := computeSum(body)
+		w.Write(hashed)
 
 	}
 }
