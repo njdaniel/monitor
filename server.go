@@ -27,7 +27,14 @@ func main() {
 
 	prometheus.Register(histogram)
 
-	log.Fatal(http.ListenAndServe(":8080", r))
+	s := &http.Server{
+		Addr:           ":8080",
+		ReadTimeout:    8 * time.Second,
+		WriteTimeout:   8 * time.Second,
+		MaxHeaderBytes: 1 << 20,
+		Handler:        r,
+	}
+	log.Fatal(s.ListenAndServe())
 }
 
 func prometheusHandler() http.Handler {
