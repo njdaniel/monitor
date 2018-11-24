@@ -7,7 +7,7 @@ Tutorial
 Build
 
     env GOOS=linux GOARCH=amd64 go build --tags netgo --ldflags '-extldflags "-lm -lstdc++ -static"'
-
+    docker build -t monitor:latest .
 Start prometheus server
 
     $ docker-compose up
