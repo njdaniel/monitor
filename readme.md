@@ -14,7 +14,7 @@ Start prometheus server
 
 ALTERNATIVE dockerstack
 
-    $ hostname -I
+    $ hostname -I | awk '{print $1}'
     $ docker swarm init --advertise-addr 192.168.1.124:2377
     
     
