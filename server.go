@@ -28,7 +28,7 @@ func main() {
 	prometheus.Register(histogram)
 
 	s := &http.Server{
-		Addr:           ":8080",
+		Addr:           ":8001",
 		ReadTimeout:    8 * time.Second,
 		WriteTimeout:   8 * time.Second,
 		MaxHeaderBytes: 1 << 20,

@@ -10,4 +10,4 @@ services:
   hash:
     image: monitor
     ports:
-      - 8080:8080
+      - 8001:8001

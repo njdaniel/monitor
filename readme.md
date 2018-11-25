@@ -16,3 +16,8 @@ ALTERNATIVE dockerstack
 
     $ hostname -I
     $ docker swarm init --advertise-addr 192.168.1.124:2377
+    
+    
+TEST Metrics
+	$ curl localhost:8001/hash -d "input"
+	$ curl localhost:8001/metrics
