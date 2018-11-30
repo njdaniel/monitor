@@ -83,3 +83,19 @@ Start service
 	sudo systemctl daemon-reload
 	sudo systemctl enable prometheus
     sudo systemctl start prometheus
+    
+    
+    
+## Install via Ansible
+
+Setup Ansible: https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-ansible-on-ubuntu-18-04
+
+
+### Update Prometheus
+
+	$ sudo vim /etc/prometheus/prometheus.yml
+	$ #Do some changes then save and exit
+	$ sudo systemctl restart prometheus
+	$ sudo systemctl status prometheus
+	$ #Make sure Active: active(running)
+	
