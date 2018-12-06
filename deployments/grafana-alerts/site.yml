@@ -1,0 +1,10 @@
+---
+# Ansible playbook to deploy docker-compose remotely
+
+- hosts: servers
+  roles:
+    - role: zal_ari.deploy_docker_compose
+      deploy_path: ./
+      remote_deploy_base_path: /tmp/dockerApps
+      remote_deploy_name: monitoring
+      remote_pull_images: True

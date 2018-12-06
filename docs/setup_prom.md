@@ -99,3 +99,26 @@ Setup Ansible: https://www.digitalocean.com/community/tutorials/how-to-install-a
 	$ sudo systemctl status prometheus
 	$ #Make sure Active: active(running)
 	
+### Install Docker with ansible
+	
+	$ ansible $DOCKER_SERVER -m user "name=docker"
+	$ ansible-galaxy install nickjj.docker
+	$ #only works with ubuntu...
+	
+Create ansible playbook
+	
+	---
+    
+    # site.yml
+    
+    - name: Example
+      hosts: "all"
+      become: true
+      vars:
+      	# users to add to docker group to run docker without sudo
+      	# user must exist
+      	docker__users: ["docker"]
+    
+      roles:
+        - { role: "nickjj.docker", tags: ["docker"] }
+	
